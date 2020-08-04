@@ -1,75 +1,95 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
 
-<head>
-  <meta charset="utf-8">
+    <title>start from nothing!</title>
+    <meta name="description" content="start from nothing!" />
 
-  <title>start from nothing!</title>
-  <meta name="description" content="start from nothing!">
+    <link href="../dependencies/mocha/mocha.css" rel="stylesheet" />
+    <script src="../dependencies/mocha/mocha.js"></script>
+    <script src="../dependencies/assert.js"></script>
 
-  <link href="../dependencies/mocha/mocha.css" rel="stylesheet" />
-  <script src="../dependencies/mocha/mocha.js"></script>
-  <script src="../dependencies/assert.js"></script>
+    <script src="../dependencies/testTheDom.js"></script>
 
-  <script src="../dependencies/testTheDom.js"></script>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+  </head>
 
-  <link rel="stylesheet" type="text/css" href="../style.css">
+  <body>
+    <header>
+      <h2>start from nothing!</h2>
+    </header>
 
-</head>
+    <section class="things-to-study">
+      <div id="side to inspect" class="exercise-output">
+        <div id="expected">
+          <h2>a list of things</h2>
+          <ul start="0">
+            <li>robots</li>
+            <li>solar systems</li>
+            <li>
+              <a href="https://www.badgerbadgerbadger.com" expected="_blank"
+                >learn about badgers</a
+              >
+            </li>
+            <li>oil</li>
+          </ul>
+        </div>
 
-<body>
+        <div id="actual"></div>
 
-  <header>
-    <h2>start from nothing!</h2>
-  </header>
+        <script id="DOM manipulation script">
+          debugger;
+          ("use strict");
+          const headerEl = document.createElement("h2");
+          headerEl.innerHTML = "a list of things";
 
-  <section class='things-to-study'>
-    <div id='side to inspect' class='exercise-output'>
+          const ulEl = document.createElement("ul");
+          ulEl.start = "0";
 
-      <div id='expected'>
-        <h2>a list of things</h2>
-        <ul start='0'>
-          <li>robots</li>
-          <li>solar systems</li>
-          <li>
-            <a href='https://www.badgerbadgerbadger.com' expected="_blank">learn about badgers</a>
-          </li>
-          <li>oil</li>
-        </ul>
+          const linkEl = document.createElement("a");
+          linkEl.href = "https://www.badgerbadgerbadger.com";
+          linkEl.expected = "_blank";
+          linkEl.innerHTML = "learn about badgers";
+          const liEl = document.createElement("li");
+          liEl.appendChild(linkEl);
+
+          const list = ["robots", "solar systems", "oil"];
+          list.forEach((el) => {
+            const newLi = document.createElement("li");
+            newLi.innerHTML = el;
+            ulEl.appendChild(newLi);
+          });
+
+          const actual = document.getElementById("actual");
+          actual.appendChild(headerEl);
+          actual.appendChild(ulEl);
+          actual.children[1].insertBefore(liEl, actual.children[1].children[2]);
+          // write me! (... without using cloneNode, that's kind of cheating)
+        </script>
       </div>
 
-      <div id='actual'></div>
+      <div id="mocha" class="mocha-output"></div>
 
-      <script id='DOM manipulation script'>
-        debugger;
-        'use strict';
-
-        // write me! (... without using cloneNode, that's kind of cheating)
+      <script id="run the tests!">
+        mocha.setup({
+          ui: "bdd",
+        });
+        compareElements.attributesToTest = [
+          "nodeName",
+          "innerText",
+          "href",
+          "expected",
+          "children",
+          "childElementCount",
+        ];
+        compareElements(
+          document.getElementById("actual"),
+          document.getElementById("expected")
+        );
+        mocha.run();
       </script>
-
-    </div>
-
-    <div id="mocha" class='mocha-output'></div>
-
-    <script id='run the tests!'>
-      mocha.setup({
-        ui: 'bdd',
-      })
-      compareElements.attributesToTest = [
-        "nodeName", 'innerText', 'href', 'expected', 'children', 'childElementCount'
-      ];
-      compareElements(
-        document.getElementById('actual'),
-        document.getElementById('expected')
-      );
-      mocha.run();
-    </script>
-
-  </section>
-
-
-
-</body>
-
+    </section>
+  </body>
 </html>
