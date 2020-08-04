@@ -1,70 +1,69 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
 
-<head>
-  <meta charset="utf-8">
+    <title>change the link</title>
+    <meta name="description" content="change the link" />
 
-  <title>change the link</title>
-  <meta name="description" content="change the link">
+    <link href="../dependencies/mocha/mocha.css" rel="stylesheet" />
+    <script src="../dependencies/mocha/mocha.js"></script>
+    <script src="../dependencies/assert.js"></script>
 
-  <link href="../dependencies/mocha/mocha.css" rel="stylesheet" />
-  <script src="../dependencies/mocha/mocha.js"></script>
-  <script src="../dependencies/assert.js"></script>
+    <script src="../dependencies/testTheDom.js"></script>
 
-  <script src="../dependencies/testTheDom.js"></script>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+  </head>
 
-  <link rel="stylesheet" type="text/css" href="../style.css">
+  <body>
+    <header>
+      <h2>change the link</h2>
+    </header>
 
-</head>
+    <section class="things-to-study">
+      <div id="side to inspect" class="exercise-output">
+        <div id="expected">
+          <a href="https://www.badgerbadgerbadger.com" expected="_blank"
+            >learn about badgers</a
+          >
+        </div>
 
-<body>
+        <div id="actual">
+          <a href="https://www.badgerbadgerbadger.com" expected="blank"
+            >learn about pigs</a
+          >
+        </div>
 
-  <header>
-    <h2>change the link</h2>
-  </header>
-
-  <section class='things-to-study'>
-    <div id='side to inspect' class='exercise-output'>
-
-
-      <div id='expected'>
-        <a href='https://www.badgerbadgerbadger.com' expected="_blank">learn about badgers</a>
+        <script id="DOM manipulation script">
+          debugger;
+          ("use strict");
+          document.getElementById("actual").children[0].innerHTML =
+            "learn about badgers";
+          // write me! (... without using cloneNode, that's kind of cheating)
+        </script>
       </div>
 
-      <div id='actual'>
-        <a href='https://www.badgerbadgerbadger.com' expected="blank">learn about pigs</a>
-      </div>
+      <div id="mocha" class="mocha-output"></div>
 
-      <script id='DOM manipulation script'>
-        debugger;
-        'use strict';
-
-        // write me! (... without using cloneNode, that's kind of cheating)
+      <script id="run the tests!">
+        mocha.setup({
+          ui: "bdd",
+        });
+        compareElements.attributesToTest = [
+          "nodeName",
+          "innerText",
+          "href",
+          "expected",
+          "children",
+          "childElementCount",
+        ];
+        compareElements(
+          document.getElementById("actual"),
+          document.getElementById("expected")
+        );
+        mocha.run();
       </script>
-
-    </div>
-
-    <div id="mocha" class='mocha-output'></div>
-
-    <script id='run the tests!'>
-      mocha.setup({
-        ui: 'bdd',
-      })
-      compareElements.attributesToTest = [
-        "nodeName", 'innerText', 'href', 'expected', 'children', 'childElementCount'
-      ];
-      compareElements(
-        document.getElementById('actual'),
-        document.getElementById('expected')
-      );
-      mocha.run();
-    </script>
-
-  </section>
-
-
-
-</body>
-
+    </section>
+  </body>
 </html>
